@@ -1,9 +1,0 @@
-namespace: default
-cluster: us-west1-a/harness-test
-computeProviderType: GCP
-computeProviderName: Google cloud platform
-serviceName: Catalog
-infraMappingType: GCP_KUBERNETES
-deploymentType: KUBERNETES
-harnessApiVersion: '1.0'
-type: GCP_KUBERNETES

@@ -1,9 +1,0 @@
-region: us-east-1
-cluster: test2
-computeProviderType: AWS
-computeProviderName: aws
-serviceName: Order
-infraMappingType: AWS_ECS
-deploymentType: ECS
-harnessApiVersion: '1.0'
-type: AWS_ECS
