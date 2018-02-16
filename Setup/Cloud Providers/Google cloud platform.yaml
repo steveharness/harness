@@ -1,0 +1,3 @@
+serviceAccountKeyFileContent: safeharness:XwncVFigQP6czcSt8ztFEg
+harnessApiVersion: '1.0'
+type: GCP

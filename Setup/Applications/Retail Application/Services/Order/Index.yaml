@@ -1,0 +1,3 @@
+artifactType: DOCKER
+harnessApiVersion: '1.0'
+type: SERVICE
