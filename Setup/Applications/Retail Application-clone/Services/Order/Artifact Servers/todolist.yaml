@@ -1,0 +1,6 @@
+imageName: todolist
+region: us-east-1
+serverName: aws
+metadataOnly: false
+harnessApiVersion: '1.0'
+type: ECR
