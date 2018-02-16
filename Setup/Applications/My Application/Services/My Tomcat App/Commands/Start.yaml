@@ -1,0 +1,49 @@
+commandUnitType: COMMAND
+targetToAllEnv: true
+commandUnits:
+  - workingDirectory: $WINGS_RUNTIME_PATH/tomcat/bin
+    command: ./startup.sh
+    filePatternEntryList:
+      - filePath: $WINGS_RUNTIME_PATH/tomcat/logs/catalina.out
+        searchPattern: Server startup in
+    name: Start Service
+    commandUnitType: EXEC
+    deploymentType: SSH
+  - command: |-
+        set -x
+        i=0
+        while [ "$i" -lt 30 ]
+        do
+            pgrep -f "\-Dcatalina.home=$WINGS_RUNTIME_PATH/tomcat"
+            rc=$?
+            if [ "$rc" -eq 0 ]
+            then
+                exit 0
+                sleep 1
+                i=$((i+1))
+            else
+                sleep 1
+                i=$((i+1))
+            fi
+        done
+        exit 1
+    name: Process Running
+    commandUnitType: PROCESS_CHECK_RUNNING
+    deploymentType: SSH
+  - command: |-
+        set -x
+        server_xml="$WINGS_RUNTIME_PATH/tomcat/conf/server.xml"
+
+        if [ -f "$server_xml" ]
+        then
+        port=$(grep "<Connector[ ]*port=\"[0-9]*\"[ ]*protocol=\"HTTP/1.1\"" "$server_xml" |cut -d '"' -f2)
+        nc -v -z -w 5 localhost $port
+        else
+          echo "Tomcat config file("$server_xml") does not exist.. port check failed."
+          exit 1
+        fi
+    name: Port Listening
+    commandUnitType: PORT_CHECK_LISTENING
+    deploymentType: SSH
+harnessApiVersion: '1.0'
+type: START
