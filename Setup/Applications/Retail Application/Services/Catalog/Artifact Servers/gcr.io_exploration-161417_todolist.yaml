@@ -1,6 +1,0 @@
-registryHostName: gcr.io
-dockerImageName: exploration-161417/todolist
-serverName: Google cloud platform
-metadataOnly: false
-harnessApiVersion: '1.0'
-type: GCR
