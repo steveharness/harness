@@ -1,4 +1,0 @@
-artifactType: ZIP
-applicationStack: Standard Tomcat 7
-harnessApiVersion: '1.0'
-type: SERVICE
