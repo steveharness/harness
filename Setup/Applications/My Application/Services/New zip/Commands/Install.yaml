@@ -3,7 +3,7 @@ targetToAllEnv: true
 commandUnits:
   - command: |2-
 
-        # Execute as root and pass environment variables
+        # Execute as root and pass environment variables Test
         # su -p -
 
         # Execute as root via user credentials (with root privileges)
