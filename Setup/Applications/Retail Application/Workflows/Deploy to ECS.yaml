@@ -1,0 +1,68 @@
+envName: prod
+templatized: false
+phases:
+  - name: Phase 1
+    infraMappingName: AWS ECS
+    serviceName: Order
+    computeProviderName: aws
+    provisionNodes: false
+    phaseSteps:
+      - name: Setup Container
+        stepsInParallel: false
+        steps:
+          - name: ECS Service Setup
+            type: ECS_SERVICE_SETUP
+        type: CONTAINER_SETUP
+      - name: Deploy Containers
+        stepsInParallel: false
+        steps:
+          - name: Upgrade Containers
+            properties:
+                commandName: Resize Service Cluster
+                instanceUnitType: COUNT
+                instanceCount: 1
+            type: ECS_SERVICE_DEPLOY
+        type: CONTAINER_DEPLOY
+      - name: Verify Service
+        stepsInParallel: false
+        type: VERIFY_SERVICE
+      - name: Wrap Up
+        stepsInParallel: false
+        type: WRAP_UP
+    type: ECS
+rollbackPhases:
+  - name: Rollback Phase 1
+    infraMappingName: AWS ECS
+    serviceName: Order
+    computeProviderName: aws
+    provisionNodes: false
+    phaseNameForRollback: Phase 1
+    phaseSteps:
+      - name: Deploy Containers
+        statusForRollback: SUCCESS
+        stepsInParallel: false
+        steps:
+          - name: Rollback Containers
+            properties:
+                rollback: true
+            type: ECS_SERVICE_ROLLBACK
+        phaseStepNameForRollback: Deploy Containers
+        type: CONTAINER_DEPLOY
+      - name: Wrap Up
+        stepsInParallel: false
+        type: WRAP_UP
+    type: ECS
+notificationRules:
+  - conditions:
+      - FAILED
+    executionScope: WORKFLOW
+    notificationGroups:
+      - Account Administrator
+failureStrategies:
+  - failureTypes:
+      - APPLICATION_ERROR
+    executionScope: WORKFLOW
+    repairActionCode: ROLLBACK_WORKFLOW
+    retryCount: 0
+harnessApiVersion: '1.0'
+type: BASIC

@@ -1,0 +1,4 @@
+accessKey: AKIAIVRKRUMJ3LAVBMSQ
+secretKey: amazonkms:mWdjSPiQSSq9JNAQd0kVtw
+harnessApiVersion: '1.0'
+type: AWS
