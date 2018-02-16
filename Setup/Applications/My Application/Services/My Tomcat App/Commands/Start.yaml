@@ -5,7 +5,7 @@ commandUnits:
     command: ./startup.sh
     filePatternEntryList:
       - {}
-    name: Start Service
+    name: Start Service Test
     commandUnitType: EXEC
     deploymentType: SSH
   - command: |-
